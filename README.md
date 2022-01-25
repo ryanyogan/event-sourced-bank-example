@@ -7,7 +7,9 @@ this example for the simple sake that it leverages Ecto versus EventStoreDB.
 ## What is Event Sourcing, and what the hell is CQRS?!
 
 I cannot recommend enough the following resources are understood first,
-please ensure this is a route one wants to go, and these type of solutions truly lend well to the challenge at hand: (Seriously, once you go ES, going back is very difficult!)
+please ensure this is a route one wants to go, and these type of solutions truly lend well to the challenge at hand:
+
+**WARNING** Seriously, once you go ES, going back is very difficult!
 
 - https://martinfowler.com/eaaDev/EventSourcing.html (Read: Martin Fowler)
 - https://www.youtube.com/watch?v=JHGkaShoyNs (Watch: Greg Young)
