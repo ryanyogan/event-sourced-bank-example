@@ -13,9 +13,7 @@ defmodule Bank.BankAccountEventHandler do
   That's because it is...
   """
   def listen(%{event_type: "AccountOpened"} = event, state) do
-    new_state =
-      Aggregate.apply(event, state)
-      |> IO.inspect()
+    new_state = Aggregate.apply(event, state)
 
     data = %{
       aggregate_id: new_state.aggregate_id,
