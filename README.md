@@ -12,13 +12,22 @@ please ensure this is a route one wants to go, and these type of solutions truly
 - https://martinfowler.com/eaaDev/EventSourcing.html (Read: Martin Fowler)
 - https://www.youtube.com/watch?v=JHGkaShoyNs (Watch: Greg Young)
 
-# Create a command to open an account
+## Let's Play via IEX
 
+```
+iex -S mix
+```
+
+### Create a command to open an account
+
+```
 iex 1 > command_open = %Bank.Commands.OpenAccount{aggregate_id: Ecto.UUID.generate()}
 %Bank.Commands.OpenAccount{aggregate_id: "10f60355-9a81-47d0-ab0c-3ebedab0bbf3"}
+```
 
-# Successful command for opening an account
+### Successful command for opening an account
 
+```
 iex 2 > Bank.BankAccountCommandHandler.receive(command_open)
 {:ok,
 %Incident.EventStore.PostgresEvent{
@@ -37,14 +46,18 @@ inserted_at: #DateTime<2020-10-31 23:17:30.087480Z>,
 updated_at: #DateTime<2020-10-31 23:17:30.087480Z>,
 version: 1
 }}
+```
 
-# Failed command as the account number already exists
+### Failed command as the account number already exists
 
+```
 iex 3 > Bank.BankAccountCommandHandler.receive(command_open)
 {:error, :account_already_open}
+```
 
-# Fetching a specific bank account from the Projection Store based on its aggregate id
+### Fetching a specific bank account from the Projection Store based on its aggregate id
 
+```
 iex 4 > Incident.ProjectionStore.get(Bank.Projections.BankAccount, "10f60355-9a81-47d0-ab0c-3ebedab0bbf3")
 %Bank.Projections.BankAccount{
 **meta**: #Ecto.Schema.Metadata<:loaded, "bank_accounts">,
@@ -58,9 +71,11 @@ inserted_at: #DateTime<2020-10-31 23:17:30.153274Z>,
 updated_at: #DateTime<2020-10-31 23:17:30.153274Z>,
 version: 1
 }
+```
 
-# Fetching all events for a specific aggregate id
+### Fetching all events for a specific aggregate id
 
+```
 iex 5 > Incident.EventStore.get("10f60355-9a81-47d0-ab0c-3ebedab0bbf3")
 [
 %Incident.EventStore.PostgresEvent{
@@ -81,9 +96,4 @@ version: 1
 }
 ]
 
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/bank](https://hexdocs.pm/bank).
 ```
