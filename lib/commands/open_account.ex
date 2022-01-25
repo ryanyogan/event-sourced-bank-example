@@ -13,11 +13,13 @@ defmodule Bank.Commands.OpenAccount do
 
   @impl true
   def valid?(command) do
-    data = Map.from_struct(command)
+    data =
+      Map.from_struct(command)
+      |> IO.inspect()
 
     %__MODULE__{}
     |> cast(data, @required_fields)
     |> validate_required(@required_fields)
-    |> Map.get(:valid)
+    |> Map.get(:valid?)
   end
 end
